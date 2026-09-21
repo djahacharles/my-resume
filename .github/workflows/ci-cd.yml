@@ -24,7 +24,7 @@ jobs:
               run: docker build -t 007091974983.dkr.ecr.us-east-1.amazonaws.com/my-dj-repo:latest .
 
             - name: Scan Docker Image
-              uses: aquasecurity/trivy-action@0.28.0
+              uses: aquasecurity/trivy-action@v0.36.0
               with:
                 image-ref: 007091974983.dkr.ecr.us-east-1.amazonaws.com/my-dj-repo:latest
                 format: table
@@ -34,4 +34,3 @@ jobs:
                                    
             - name: Push image to ECR
               run: echo "push"
-              
