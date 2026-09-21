@@ -1,0 +1,37 @@
+name: Build and push to ECR
+on:
+    push:
+       # pull_requests:
+        #    branches: {['mai', 'dev']
+        branches: ['main']
+
+jobs:
+    build_scan:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout the code
+              uses: actions/checkout@v7
+              #with:
+                #repository:
+            - name: Trivy Scan
+              uses: aquasecurity/trivy-action@v0.36.0
+              with:
+                scan-type: 'fs'
+                severity: HIGH,CRITICAL
+                exit-code: 1
+
+            - name: Build Docker image
+              run: docker build -t 007091974983.dkr.ecr.us-east-1.amazonaws.com/my-dj-repo:latest .
+
+            - name: Scan Docker Image
+              uses: aquasecurity/trivy-action@0.28.0
+              with:
+                image-ref: 007091974983.dkr.ecr.us-east-1.amazonaws.com/my-dj-repo:latest
+                format: table
+                exit-code: 1
+                ignore-unfixed: true
+                severity: CRITICAL,HIGH
+                                   
+            - name: Push image to ECR
+              run: echo "push"
+              
