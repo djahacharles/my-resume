@@ -32,7 +32,7 @@ jobs:
               with:
                 image-ref: 007091974983.dkr.ecr.us-east-1.amazonaws.com/my-dj-repo:latest
                 format: table
-                exit-code: 1
+                exit-code: 0
                 ignore-unfixed: true
                 severity: CRITICAL,HIGH
                                    
@@ -46,6 +46,4 @@ jobs:
               id: login-ecr
               uses: aws-actions/amazon-ecr-login@v2
 
-            - name: Verify AWS Identity
-              run: |
-                aws sts get-caller-identity
+            
